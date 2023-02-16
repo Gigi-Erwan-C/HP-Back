@@ -45,11 +45,11 @@ CREATE TABLE IF NOT EXISTS "student" (
 
 CREATE TABLE IF NOT EXISTS "point" (
   "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  "value" TEXT NOT NULL,
-  "content" TEXT NOT NULL UNIQUE,
+  "value" INT NOT NULL,
+  "content" TEXT,
+  "user_id" INT REFERENCES "user"("id"),
+  "house_id" INT REFERENCES "house"("id"),
   "user_id" INT NOT NULL REFERENCES "user"("id"),
-  "house_id" INT NOT NULL REFERENCES "house"("id"),
-  "role_id" INT NOT NULL REFERENCES "role"("id"),
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   "updated_at" TIMESTAMPZ
 );
