@@ -1,3 +1,5 @@
+-- Deploy harrypotter:init to pg
+
 BEGIN;
 
 DROP TABLE IF EXISTS "role",

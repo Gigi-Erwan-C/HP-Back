@@ -1,4 +1,6 @@
-const pool = require('./database');
+const client = require('./database');
+
+console.log(client);
 
 const dataMapper = {
 
