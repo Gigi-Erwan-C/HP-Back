@@ -6,6 +6,6 @@ DROP TABLE "role",
 "user",
 "house",
 "student",
-"point";
+"point" CASCADE;
 
 COMMIT;

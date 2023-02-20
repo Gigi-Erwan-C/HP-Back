@@ -12,6 +12,25 @@ const dataMapper = {
     const results = await client.query(preparedQuery);
     return results.rows;
   },
+
+  async addUser(userInfo) {
+    const insertUser = `
+    INSERT INTO "user" ("lastname", "firstname", "email", "password", "role_id")
+    VALUES ($1, $2, $3, $4, $5);
+    `;
+
+    const values = [
+      `${userInfo.lastname}`,
+      `${userInfo.firstname}`,
+      `${userInfo.email}`,
+      `${userInfo.password}`,
+      `${userInfo.role_id}`,
+    ];
+
+    const results = await client.query(insertUser, values);
+
+    return (results.rowCount === 1);
+  },
 };
 
 module.exports = dataMapper;
