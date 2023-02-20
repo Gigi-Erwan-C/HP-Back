@@ -1,7 +1,7 @@
 const dataMapper = require('../models/dataMapper');
 
-const controller = {
+const userController = {
 
 };
 
-module.exports = controller;
+module.exports = userController;
