@@ -6,6 +6,12 @@ const dataMapper = {
     const results = await client.query(preparedQuery);
     return results.rows;
   },
+
+  async getAllUsers() {
+    const preparedQuery = 'SELECT * FROM "user"';
+    const results = await client.query(preparedQuery);
+    return results.rows;
+  },
 };
 
 module.exports = dataMapper;
