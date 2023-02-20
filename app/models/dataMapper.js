@@ -1,9 +1,9 @@
 const client = require('./database');
 
 const dataMapper = {
-  getAllRoles() {
+  async getAllRoles() {
     const preparedQuery = 'SELECT * FROM "role"';
-    const results = client.query(preparedQuery);
+    const results = await client.query(preparedQuery);
     return results.rows;
   },
 };

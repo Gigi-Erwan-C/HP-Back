@@ -1,8 +1,9 @@
 const dataMapper = require('../models/dataMapper');
 
 const roleController = {
-  getRole(_, res) {
-    const role = dataMapper.getAllRoles();
+  async getRole(_, res) {
+    const role = await dataMapper.getAllRoles();
+    console.log(role);
     res.json(role);
   },
 };
