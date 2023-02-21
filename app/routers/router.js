@@ -19,6 +19,7 @@ router.get('/student', studentController.getAll);
 router.post('/admin/student', studentController.addStudent);
 router.get('/admin/student/:id', studentController.getOne);
 router.patch('/admin/student/:id', studentController.update);
+router.delete('/admin/student/:id', studentController.delete);
 
 router.get('/house', houseController.getAll);
 router.get('/house/:id', houseController.getOne);

@@ -25,6 +25,12 @@ const studentController = {
     res.json(updateStudent);
   },
 
+  async delete(req, res) {
+    const { id } = req.params;
+    await dataMapper.deleteOneStudent(id);
+    res.send('Your student is dead');
+  },
+
 };
 
 module.exports = studentController;
