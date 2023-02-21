@@ -8,8 +8,8 @@ const userController = {
 
   async add(req, res) {
     const userInfo = req.body;
-    await dataMapper.addUser(userInfo);
-    res.send('user added');
+    const user = await dataMapper.addUser(userInfo);
+    res.json(user);
   },
 
   async getOne(req, res) {

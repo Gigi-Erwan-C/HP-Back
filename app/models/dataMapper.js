@@ -14,10 +14,10 @@ const dataMapper = {
   },
 
   async addUser(userInfo) {
-    const insertUser = `
+    const preparedQuery = `
     INSERT INTO "user" ("lastname", "firstname", "email", "password", "role_id")
-    VALUES ($1, $2, $3, $4, $5);
-    `;
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING *`;
 
     const values = [
       `${userInfo.lastname}`,
@@ -27,9 +27,9 @@ const dataMapper = {
       `${userInfo.role_id}`,
     ];
 
-    const result = await client.query(insertUser, values);
+    const result = await client.query(preparedQuery, values);
 
-    return (result.rowCount === 1);
+    return result.rows[0];
   },
 
   async getOneUser(id) {
