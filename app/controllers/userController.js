@@ -8,8 +8,8 @@ const userController = {
 
   async add(req, res) {
     const userInfo = req.body;
-    await dataMapper.addUser(userInfo);
-    res.send('user added');
+    const user = await dataMapper.addUser(userInfo);
+    res.json(user);
   },
 
   async getOne(req, res) {
@@ -23,6 +23,12 @@ const userController = {
     const userInfo = req.body;
     const result = await dataMapper.updateUser({ ...userInfo, id });
     res.json(result);
+  },
+
+  async delete(req, res) {
+    const { id } = req.params;
+    await dataMapper.deleteUser(id);
+    res.send('user deleted');
   },
 };
 

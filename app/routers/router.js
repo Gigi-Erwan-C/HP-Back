@@ -11,6 +11,7 @@ router.post('/admin/user', userController.add);
 
 router.get('/admin/user/:id', userController.getOne);
 router.patch('/admin/user/:id', userController.update);
+router.delete('/admin/user/:id', userController.delete);
 
 router.get('/admin/student', studentController.getAll);
 
