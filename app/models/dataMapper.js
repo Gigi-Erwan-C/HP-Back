@@ -144,6 +144,33 @@ const dataMapper = {
     return result.rows[0];
   },
 
+  async updateOneStudent(obj) {
+    const preparedQuery = `
+    UPDATE "student"
+    SET
+    "lastname" = $1,
+    "firstname" = $2,
+    "class" = $3,
+    "score" = $4,
+    "house_id" = $5,
+    "updated_at" = now()
+    WHERE "id" = $6
+    RETURNING *`;
+
+    const values = [
+      obj.lastname,
+      obj.firstname,
+      obj.class,
+      obj.score,
+      obj.house_id,
+      obj.id,
+    ];
+
+    const result = await client.query(preparedQuery, values);
+
+    return result.rows[0];
+  },
+
   async getAllStudentsFromOneHouse(id) {
     const preparedQuery = `
     SELECT * FROM "student"
