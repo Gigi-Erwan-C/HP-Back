@@ -81,6 +81,24 @@ const dataMapper = {
     const result = await client.query(preparedQuery);
     return result.rows;
   },
+
+  async addOneStudent(studentInfo) {
+    const preparedQuery = `INSERT INTO "student" ("lastname", "firstname", "class", "score", "house_id")
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING *`;
+
+    const values = [
+      `${studentInfo.lastname}`,
+      `${studentInfo.firstname}`,
+      `${studentInfo.class}`,
+      `${studentInfo.score}`,
+      `${studentInfo.house_id}`,
+    ];
+
+    const result = await client.query(preparedQuery, values);
+
+    return result.rows[0];
+  },
 };
 
 module.exports = dataMapper;
