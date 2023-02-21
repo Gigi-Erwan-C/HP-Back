@@ -31,6 +31,12 @@ const dataMapper = {
 
     return (results.rowCount === 1);
   },
+
+  async getOneUser(id) {
+    const preparedQuery = `SELECT * FROM "user" WHERE "id" = ${id}`;
+    const result = await client.query(preparedQuery);
+    return result.rows[0];
+  },
 };
 
 module.exports = dataMapper;

@@ -11,6 +11,12 @@ const userController = {
     await dataMapper.addUser(userInfo);
     res.send('user added');
   },
+
+  async getOne(req, res) {
+    const { id } = req.params;
+    const user = await dataMapper.getOneUser(id);
+    res.json(user);
+  },
 };
 
 module.exports = userController;
