@@ -81,6 +81,12 @@ const dataMapper = {
     const result = await client.query(preparedQuery);
     return result.rows;
   },
+
+  async getOneHouse(id) {
+    const preparedQuery = `SELECT * FROM "house" WHERE "id" = ${id}`;
+    const result = await client.query(preparedQuery);
+    return result.rows[0];
+  },
 };
 
 module.exports = dataMapper;
