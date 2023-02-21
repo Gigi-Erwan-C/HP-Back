@@ -4,6 +4,7 @@ const router = express.Router();
 
 const userController = require('../controllers/userController');
 const roleController = require('../controllers/roleController');
+const houseController = require('../controllers/houseController');
 
 router.get('/admin/user', userController.getAll);
 router.post('/admin/user', userController.add);
@@ -11,6 +12,8 @@ router.post('/admin/user', userController.add);
 router.get('/admin/user/:id', userController.getOne);
 router.patch('/admin/user/:id', userController.update);
 router.delete('/admin/user/:id', userController.delete);
+
+router.get('/house/:id', houseController.getOne);
 
 router.get('/role', roleController.getRole);
 
