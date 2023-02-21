@@ -17,6 +17,13 @@ const userController = {
     const user = await dataMapper.getOneUser(id);
     res.json(user);
   },
+
+  async update(req, res) {
+    const { id } = req.params;
+    const userInfo = req.body;
+    const result = await dataMapper.updateUser({ ...userInfo, id });
+    res.json(result);
+  },
 };
 
 module.exports = userController;

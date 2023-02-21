@@ -27,14 +27,40 @@ const dataMapper = {
       `${userInfo.role_id}`,
     ];
 
-    const results = await client.query(insertUser, values);
+    const result = await client.query(insertUser, values);
 
-    return (results.rowCount === 1);
+    return (result.rowCount === 1);
   },
 
   async getOneUser(id) {
     const preparedQuery = `SELECT * FROM "user" WHERE "id" = ${id}`;
     const result = await client.query(preparedQuery);
+    return result.rows[0];
+  },
+
+  async updateUser(userInfo) {
+    const preparedQuery = `
+    UPDATE "user"
+    SET
+      "lastname" = $1,
+      "firstname" = $2,
+      "email" = $3,
+      "password" = $4,
+      "role_id" = $5,
+      "updated_at" = now()
+    WHERE "id" = $6
+    RETURNING *`;
+
+    const values = [
+      `${userInfo.lastname}`,
+      `${userInfo.firstname}`,
+      `${userInfo.email}`,
+      `${userInfo.password}`,
+      `${userInfo.role_id}`,
+      `${userInfo.id}`,
+    ];
+
+    const result = await client.query(preparedQuery, values);
     return result.rows[0];
   },
 };
