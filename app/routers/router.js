@@ -6,6 +6,7 @@ const userController = require('../controllers/userController');
 const roleController = require('../controllers/roleController');
 const studentController = require('../controllers/studentController');
 const houseController = require('../controllers/houseController');
+const pointController = require('../controllers/pointController');
 
 router.get('/admin/user', userController.getAll);
 router.post('/admin/user', userController.add);
@@ -21,6 +22,8 @@ router.get('/house', houseController.getAll);
 router.get('/house/:id', houseController.getOne);
 router.get('/house/:id/student', houseController.getAllStudentsFromOneHouse);
 router.patch('/admin/house/:id', houseController.update);
+
+router.get('/point', pointController.getAll);
 
 router.get('/role', roleController.getRole);
 

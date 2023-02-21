@@ -143,6 +143,12 @@ const dataMapper = {
     const result = await client.query(preparedQuery, values);
     return result.rows;
   },
+
+  async getAllPoints() {
+    const preparedQuery = 'SELECT * FROM "point"';
+    const result = await client.query(preparedQuery);
+    return result.rows;
+  },
 };
 
 module.exports = dataMapper;
