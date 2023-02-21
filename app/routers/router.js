@@ -17,6 +17,7 @@ router.delete('/admin/user/:id', userController.delete);
 
 router.get('/student', studentController.getAll);
 router.post('/admin/student', studentController.addStudent);
+router.get('/admin/student/:id', studentController.getOne);
 
 router.get('/house', houseController.getAll);
 router.get('/house/:id', houseController.getOne);

@@ -133,6 +133,17 @@ const dataMapper = {
     return result.rows[0];
   },
 
+  async getOneStudent(id) {
+    const preparedQuery = `
+    SELECT * FROM "student"
+    WHERE "id" = $1
+    `;
+    const values = [`${id}`];
+
+    const result = await client.query(preparedQuery, values);
+    return result.rows[0];
+  },
+
   async getAllStudentsFromOneHouse(id) {
     const preparedQuery = `
     SELECT * FROM "student"

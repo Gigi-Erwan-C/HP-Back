@@ -11,6 +11,12 @@ const studentController = {
     const student = await dataMapper.addOneStudent(studentInfo);
     res.json(student);
   },
+
+  async getOne(req, res) {
+    const { id } = req.params;
+    const student = await dataMapper.getOneStudent(id);
+    res.json(student);
+  },
 };
 
 module.exports = studentController;
