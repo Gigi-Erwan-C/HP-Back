@@ -149,6 +149,24 @@ const dataMapper = {
     const result = await client.query(preparedQuery);
     return result.rows;
   },
+
+  async addPoint(pointInfo) {
+    const preparedQuery = `
+    INSERT INTO "point" ("value", "content", "user_id", "house_id", "student_id")
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING *`;
+
+    const values = [
+      `${pointInfo.value}`,
+      `${pointInfo.content}`,
+      `${pointInfo.user_id}`,
+      `${pointInfo.house_id}`,
+      `${pointInfo.student_id}`,
+    ];
+
+    const result = await client.query(preparedQuery, values);
+    return result.rows[0];
+  },
 };
 
 module.exports = dataMapper;
