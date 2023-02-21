@@ -63,6 +63,18 @@ const dataMapper = {
     const result = await client.query(preparedQuery, values);
     return result.rows[0];
   },
+
+  async deleteUser(id) {
+    const preparedQuery = `
+    DELETE FROM "user"
+    WHERE "id" = $1`;
+
+    const values = [`${id}`];
+
+    const result = await client.query(preparedQuery, values);
+
+    return (result.rowCount === 1);
+  },
 };
 
 module.exports = dataMapper;
