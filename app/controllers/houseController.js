@@ -18,6 +18,12 @@ const houseController = {
     const result = await dataMapper.getAllHouses();
     res.json(result);
   },
+
+  async getAllStudentsFromOneHouse(req, res) {
+    const { id } = req.params;
+    const result = await dataMapper.getAllStudentsFromOneHouse(id);
+    res.json(result);
+  },
 };
 
 module.exports = houseController;
