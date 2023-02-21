@@ -13,6 +13,11 @@ const houseController = {
     const result = await dataMapper.updateHouse({ ...houseInfo, id });
     res.json(result);
   },
+
+  async getAll(_, res) {
+    const result = await dataMapper.getAllHouses();
+    res.json(result);
+  },
 };
 
 module.exports = houseController;
