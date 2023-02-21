@@ -87,6 +87,26 @@ const dataMapper = {
     const result = await client.query(preparedQuery);
     return result.rows[0];
   },
+
+  async updateHouse(houseInfo) {
+    const preparedQuery = `
+    UPDATE "house"
+    SET
+      "name" = $1,
+      "score" = $2,
+      "updated_at" = now()
+    WHERE "id" = $3
+    RETURNING *`;
+
+    const values = [
+      houseInfo.name,
+      houseInfo.score,
+      houseInfo.id,
+    ];
+
+    const result = await client.query(preparedQuery, values);
+    return result.rows[0];
+  },
 };
 
 module.exports = dataMapper;

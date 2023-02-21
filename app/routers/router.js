@@ -17,6 +17,7 @@ router.delete('/admin/user/:id', userController.delete);
 router.get('/admin/student', studentController.getAll);
 
 router.get('/house/:id', houseController.getOne);
+router.patch('/admin/house/:id', houseController.update);
 
 router.get('/role', roleController.getRole);
 
