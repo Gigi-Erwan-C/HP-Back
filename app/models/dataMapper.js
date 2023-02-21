@@ -63,6 +63,12 @@ const dataMapper = {
     const result = await client.query(preparedQuery, values);
     return result.rows[0];
   },
+
+  async getAllStudents() {
+    const preparedQuery = 'SELECT * FROM "student"';
+    const result = await client.query(preparedQuery);
+    return result.rows;
+  },
 };
 
 module.exports = dataMapper;
