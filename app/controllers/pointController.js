@@ -24,6 +24,12 @@ const pointController = {
     const updatePoint = await dataMapper.updateOnePoint({ ...point, id });
     res.json(updatePoint);
   },
+
+  async delete(req, res) {
+    const { id } = req.params;
+    await dataMapper.deleteOnePoint(id);
+    res.send('Your point(s) have been deleted');
+  },
 };
 
 module.exports = pointController;

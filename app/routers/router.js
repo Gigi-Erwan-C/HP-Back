@@ -30,6 +30,7 @@ router.get('/point', pointController.getAll);
 router.post('/point', pointController.add);
 router.get('/point/:id', pointController.getOne);
 router.patch('/point/:id', pointController.update);
+router.delete('/point/:id', pointController.delete);
 
 router.get('/role', roleController.getRole);
 
