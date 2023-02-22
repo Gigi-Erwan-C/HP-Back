@@ -8,6 +8,7 @@ const pointController = {
 
   async add(req, res) {
     const pointInfo = req.body;
+
     const result = await dataMapper.addPoint(pointInfo);
     res.json(result);
   },

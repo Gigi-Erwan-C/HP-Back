@@ -204,7 +204,7 @@ const dataMapper = {
   async addPoint(pointInfo) {
     const preparedQuery = `
     INSERT INTO "point" ("value", "content", "user_id", "house_id", "student_id")
-    VALUES ($1, $2, $3, $4, $5)
+    VALUES ($1, $2, $3, NULLIF($4,'')::int, NULLIF($5,'')::int)
     RETURNING *`;
 
     const values = [
