@@ -29,6 +29,7 @@ router.patch('/admin/house/:id', houseController.update);
 router.get('/point', pointController.getAll);
 router.post('/point', pointController.add);
 router.get('/point/:id', pointController.getOne);
+router.patch('/point/:id', pointController.update);
 
 router.get('/role', roleController.getRole);
 

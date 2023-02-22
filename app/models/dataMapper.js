@@ -231,6 +231,33 @@ const dataMapper = {
 
     return result.rows[0];
   },
+
+  async updateOnePoint(point) {
+    const preparedQuery = `
+    UPDATE "point"
+    SET
+    "value" = $1,
+    "content" = $2,
+    "user_id" = $3,
+    "house_id" = $4,
+    "student_id" = $5,
+    "updated_at" = now()
+    WHERE "id" = $6
+    RETURNING *`;
+
+    const values = [
+      point.value,
+      point.content,
+      point.user_id,
+      point.house_id,
+      point.student_id,
+      point.id,
+    ];
+
+    const result = await client.query(preparedQuery, values);
+
+    return result.rows[0];
+  },
 };
 
 module.exports = dataMapper;

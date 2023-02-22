@@ -17,6 +17,13 @@ const pointController = {
     const onePoint = await dataMapper.getOnePoint(id);
     res.json(onePoint);
   },
+
+  async update(req, res) {
+    const { id } = req.params;
+    const point = req.body;
+    const updatePoint = await dataMapper.updateOnePoint({ ...point, id });
+    res.json(updatePoint);
+  },
 };
 
 module.exports = pointController;
