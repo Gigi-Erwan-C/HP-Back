@@ -218,6 +218,19 @@ const dataMapper = {
     const result = await client.query(preparedQuery, values);
     return result.rows[0];
   },
+
+  async getOnePoint(id) {
+    const preparedQuery = `
+    SELECT * FROM "point"
+    WHERE "id" = $1
+    `;
+
+    const values = [`${id}`];
+
+    const result = await client.query(preparedQuery, values);
+
+    return result.rows[0];
+  },
 };
 
 module.exports = dataMapper;
