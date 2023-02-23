@@ -7,8 +7,13 @@ const roleController = require('../controllers/roleController');
 const studentController = require('../controllers/studentController');
 const houseController = require('../controllers/houseController');
 const pointController = require('../controllers/pointController');
+const authController = require('../controllers/authController');
 
-router.get('/admin/user', userController.getAll);
+const isAdmin = require('../middlewares/isAdmin');
+
+router.post('/auth', authController.login);
+
+router.get('/admin/user', isAdmin, userController.getAll);
 router.post('/admin/user', userController.add);
 
 router.get('/admin/user/:id', userController.getOne);
