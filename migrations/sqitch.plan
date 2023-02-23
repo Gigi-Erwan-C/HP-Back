@@ -2,3 +2,4 @@
 %project=harrypotter
 
 init 2023-02-17T13:06:42Z JM Laffargue <laffargue.jm@gmail.com> # create tables in db
+HP_revision1 2023-02-23T07:34:39Z Gigi <gigi46.hd48@gmail.com> # alter tables delete specify NOT NULL

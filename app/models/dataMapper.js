@@ -117,7 +117,7 @@ const dataMapper = {
 
   async addOneStudent(studentInfo) {
     const preparedQuery = `INSERT INTO "student" ("lastname", "firstname", "class", "score", "house_id")
-    VALUES ($1, $2, $3, $4, $5)
+    VALUES ($1, $2, $3, NULLIF($4, '')::INT, NULLIF($5, '')::INT)
     RETURNING *`;
 
     const values = [
@@ -151,8 +151,8 @@ const dataMapper = {
     "lastname" = $1,
     "firstname" = $2,
     "class" = $3,
-    "score" = $4,
-    "house_id" = $5,
+    "score" = NULLIF($4, '')::INT,
+    "house_id" = NULLIF($5, '')::INT,
     "updated_at" = now()
     WHERE "id" = $6
     RETURNING *`;
