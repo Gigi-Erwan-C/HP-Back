@@ -271,6 +271,21 @@ const dataMapper = {
 
     return (result.rowCount === 1);
   },
+
+  async checkUserInfo(userInfo) {
+    const preparedQuery = `
+    SELECT * FROM "user"
+    WHERE "email" = $1
+    AND "password" = $2`;
+
+    const values = [
+      `${userInfo.email}`,
+      `${userInfo.password}`,
+    ];
+
+    const result = await client.query(preparedQuery, values);
+    return result.rows[0];
+  },
 };
 
 module.exports = dataMapper;
