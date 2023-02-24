@@ -20,7 +20,10 @@ router.get('/admin/user/:id', userController.getOne);
 router.patch('/admin/user/:id', userController.update);
 router.delete('/admin/user/:id', userController.delete);
 
+router.patch('/user/:id', userController.updatePassword);
+
 router.get('/student', studentController.getAll);
+router.get('/student/:id/score', studentController.getScoreByStudent);
 router.post('/admin/student', studentController.addStudent);
 router.get('/admin/student/:id', studentController.getOne);
 router.patch('/admin/student/:id', studentController.update);

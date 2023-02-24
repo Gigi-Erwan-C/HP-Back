@@ -85,6 +85,46 @@ const userController = {
     await dataMapper.deleteUser(id);
     res.send('user deleted');
   },
+
+  async updatePassword(req, res) {
+    const { id } = req.params;
+    const {
+      oldPassword, password, confirmation,
+    } = req.body;
+
+    const user = await dataMapper.getOneUser(id);
+    if (!user) {
+      res.status(401).send({ errorMessage: 'Le mot de passe ou la combinaison est incorrecte.' });
+      return;
+    }
+    console.log(user);
+    const isMatchingPassword = await bcrypt.compare(oldPassword, user.password);
+    console.log(isMatchingPassword);
+    if (!isMatchingPassword) {
+      res.status(401).send({ errorMessage: 'L\'ancien mot de passe est incorrecte.' });
+      return;
+    }
+
+    if (!oldPassword || !password || password.length < 4) {
+      res.status(400).send({ message: 'Le mot de passe doit faire plus de 4 caractères ou l\'ancien mot de passe est incorrect.' });
+      return;
+    }
+
+    if (password !== confirmation) {
+      res.status(400).send({ errorMessage: 'Le mot de passe et sa confirmation ne correspondent pas.' });
+      return;
+    }
+
+    const saltRounds = parseInt(process.env.SALT_ROUNDS, 10);
+
+    const encryptedPassword = await bcrypt.hash(password, saltRounds);
+
+    const result = await dataMapper.updatePasswordByUser({
+      password: encryptedPassword,
+      id,
+    });
+    res.json(result);
+  },
 };
 
 module.exports = userController;

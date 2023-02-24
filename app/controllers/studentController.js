@@ -31,6 +31,12 @@ const studentController = {
     res.send('Your student is dead');
   },
 
+  async getScoreByStudent(req, res) {
+    const { id } = req.params;
+    const student = await dataMapper.getStudentScore(id);
+    res.json(student);
+  },
+
 };
 
 module.exports = studentController;

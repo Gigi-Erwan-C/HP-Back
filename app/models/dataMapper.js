@@ -116,14 +116,14 @@ const dataMapper = {
   },
 
   async addOneStudent(studentInfo) {
-    const preparedQuery = `INSERT INTO "student" ("lastname", "firstname", "class", "score", "house_id")
+    const preparedQuery = `INSERT INTO "student" ("lastname", "firstname", "class_name", "score", "house_id")
     VALUES ($1, $2, $3, NULLIF($4, '')::INT, NULLIF($5, '')::INT)
     RETURNING *`;
 
     const values = [
       `${studentInfo.lastname}`,
       `${studentInfo.firstname}`,
-      `${studentInfo.class}`,
+      `${studentInfo.class_name}`,
       `${studentInfo.score}`,
       `${studentInfo.house_id}`,
     ];
@@ -150,7 +150,7 @@ const dataMapper = {
     SET
     "lastname" = $1,
     "firstname" = $2,
-    "class" = $3,
+    "class_name" = $3,
     "score" = NULLIF($4, '')::INT,
     "house_id" = NULLIF($5, '')::INT,
     "updated_at" = now()
@@ -160,7 +160,7 @@ const dataMapper = {
     const values = [
       obj.lastname,
       obj.firstname,
-      obj.class,
+      obj.class_name,
       obj.score,
       obj.house_id,
       obj.id,
@@ -182,6 +182,19 @@ const dataMapper = {
     const result = await client.query(preparedQuery, values);
 
     return (result.rowCount === 1);
+  },
+
+  async getStudentScore(id) {
+    const preparedQuery = `SELECT
+    "score" FROM "student"
+    WHERE "id" = $1
+    `;
+
+    const values = [id];
+
+    const result = await client.query(preparedQuery, values);
+
+    return result.rows[0];
   },
 
   async getAllStudentsFromOneHouse(id) {
@@ -284,6 +297,21 @@ const dataMapper = {
     ];
 
     const result = await client.query(preparedQuery, values);
+    return result.rows[0];
+  },
+
+  async updatePasswordByUser(obj) {
+    const preparedQuery = `UPDATE "user" SET "password" = $1 
+   WHERE "id" = $2
+   RETURNING *`;
+
+    const values = [
+      obj.password,
+      obj.id,
+    ];
+
+    const result = await client.query(preparedQuery, values);
+
     return result.rows[0];
   },
 };
