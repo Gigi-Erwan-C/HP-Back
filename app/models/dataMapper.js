@@ -286,6 +286,21 @@ const dataMapper = {
     const result = await client.query(preparedQuery, values);
     return result.rows[0];
   },
+
+  async updatePasswordByUser(obj) {
+    const preparedQuery = `UPDATE "user" SET "password" = $1 
+   WHERE "id" = $2
+   RETURNING *`;
+
+    const values = [
+      obj.password,
+      obj.id,
+    ];
+
+    const result = await client.query(preparedQuery, values);
+
+    return result.rows[0];
+  },
 };
 
 module.exports = dataMapper;

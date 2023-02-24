@@ -20,6 +20,8 @@ router.get('/admin/user/:id', userController.getOne);
 router.patch('/admin/user/:id', userController.update);
 router.delete('/admin/user/:id', userController.delete);
 
+router.patch('/user/:id', userController.updatePassword);
+
 router.get('/student', studentController.getAll);
 router.post('/admin/student', studentController.addStudent);
 router.get('/admin/student/:id', studentController.getOne);
