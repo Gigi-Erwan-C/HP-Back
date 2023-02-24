@@ -100,13 +100,15 @@ const dataMapper = {
     SET
       "name" = $1,
       "score" = $2,
+      "name_in_english" = $3,
       "updated_at" = now()
-    WHERE "id" = $3
+    WHERE "id" = $4
     RETURNING *`;
 
     const values = [
       houseInfo.name,
       houseInfo.score,
+      houseInfo.name_in_english,
       houseInfo.id,
     ];
 
@@ -301,7 +303,7 @@ const dataMapper = {
   },
 
   async updatePasswordByUser(obj) {
-    const preparedQuery = `UPDATE "user" SET "password" = $1 
+    const preparedQuery = `UPDATE "user" SET "password" = $1
    WHERE "id" = $2
    RETURNING *`;
 
