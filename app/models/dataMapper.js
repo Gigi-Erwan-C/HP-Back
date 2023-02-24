@@ -116,14 +116,14 @@ const dataMapper = {
   },
 
   async addOneStudent(studentInfo) {
-    const preparedQuery = `INSERT INTO "student" ("lastname", "firstname", "class", "score", "house_id")
+    const preparedQuery = `INSERT INTO "student" ("lastname", "firstname", "class_name", "score", "house_id")
     VALUES ($1, $2, $3, NULLIF($4, '')::INT, NULLIF($5, '')::INT)
     RETURNING *`;
 
     const values = [
       `${studentInfo.lastname}`,
       `${studentInfo.firstname}`,
-      `${studentInfo.class}`,
+      `${studentInfo.class_name}`,
       `${studentInfo.score}`,
       `${studentInfo.house_id}`,
     ];
@@ -150,7 +150,7 @@ const dataMapper = {
     SET
     "lastname" = $1,
     "firstname" = $2,
-    "class" = $3,
+    "class_name" = $3,
     "score" = NULLIF($4, '')::INT,
     "house_id" = NULLIF($5, '')::INT,
     "updated_at" = now()
@@ -160,7 +160,7 @@ const dataMapper = {
     const values = [
       obj.lastname,
       obj.firstname,
-      obj.class,
+      obj.class_name,
       obj.score,
       obj.house_id,
       obj.id,
