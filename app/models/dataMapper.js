@@ -82,6 +82,27 @@ const dataMapper = {
     return result.rows;
   },
 
+  async getTopFiveStudents() {
+    const preparedQuery = `SELECT
+    "student"."lastname",
+    "student"."firstname",
+    "house"."name" AS "house_name",
+    SUM ("value") AS "student_total_score"
+    FROM "point"
+    JOIN "student" ON "student"."id" = "student_id"
+    JOIN "house" ON "house"."id" = "student"."house_id"
+    GROUP BY
+    "student_id",
+    "student"."firstname",
+    "student"."house_id",
+    "house"."name",
+    "student"."lastname"
+    ORDER BY "student_total_score" DESC
+    LIMIT 5`;
+    const result = await client.query(preparedQuery);
+    return result.rows;
+  },
+
   async getAllHouses() {
     const preparedQuery = 'SELECT * FROM "house"';
     const result = await client.query(preparedQuery);
