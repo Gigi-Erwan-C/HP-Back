@@ -24,6 +24,7 @@ router.patch('/user/:id', userController.updatePassword);
 
 router.get('/student', studentController.getAll);
 router.get('/student/top5', studentController.getTopFive);
+router.get('/student/total-score-and-house', studentController.getAllWithHouseAndTotalScore);
 router.get('/student/:id/score', studentController.getScoreByStudent);
 router.post('/admin/student', studentController.addStudent);
 router.get('/admin/student/:id', studentController.getOne);

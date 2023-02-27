@@ -11,6 +11,11 @@ const studentController = {
     res.json(topFiveStudents);
   },
 
+  async getAllWithHouseAndTotalScore(_, res) {
+    const students = await dataMapper.getAllStudentsWithHouseAndTotalScore();
+    res.json(students);
+  },
+
   async addStudent(req, res) {
     const studentInfo = req.body;
     const student = await dataMapper.addOneStudent(studentInfo);

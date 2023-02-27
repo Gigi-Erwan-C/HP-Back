@@ -93,19 +93,37 @@ const dataMapper = {
 
   async getTopFiveStudents() {
     const preparedQuery = `SELECT
-"firstname",
-"lastname",
-"student"."score",
-"house"."name",
-COALESCE (SUM ("point"."value") + "student"."score", "student"."score") AS "student_total_score"
-FROM "student"
-LEFT OUTER JOIN "point" ON "student"."id" = "student_id"
-JOIN "house" ON "house"."id" = "student"."house_id"
-GROUP BY
-"student"."id",
-"house"."name"
-ORDER BY "student_total_score" DESC
-LIMIT 5`;
+    "firstname",
+    "lastname",
+    "student"."score",
+    "house"."name",
+    COALESCE (SUM ("point"."value") + "student"."score", "student"."score") AS "student_total_score"
+    FROM "student"
+    LEFT OUTER JOIN "point" ON "student"."id" = "student_id"
+    JOIN "house" ON "house"."id" = "student"."house_id"
+    GROUP BY
+    "student"."id",
+    "house"."name"
+    ORDER BY "student_total_score" DESC
+    LIMIT 5`;
+    const result = await client.query(preparedQuery);
+    return result.rows;
+  },
+
+  async getAllStudentsWithHouseAndTotalScore() {
+    const preparedQuery = `SELECT
+    "firstname",
+    "lastname",
+    "class_name",
+    "house"."name" AS "house_name",
+    COALESCE (SUM ("point"."value") + "student"."score", "student"."score") AS "student_total_score"
+    FROM "student"
+    LEFT OUTER JOIN "point" ON "student"."id" = "student_id"
+    JOIN "house" ON "house"."id" = "student"."house_id"
+    GROUP BY
+    "student"."id",
+    "house"."name"
+    ORDER BY "student"."firstname"`;
     const result = await client.query(preparedQuery);
     return result.rows;
   },
