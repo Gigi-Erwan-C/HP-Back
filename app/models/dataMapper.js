@@ -38,6 +38,15 @@ const dataMapper = {
     return result.rows[0];
   },
 
+  async getOneUserByEmail(email) {
+    const preparedQuery = 'SELECT * FROM "user" WHERE "email" = $1';
+
+    const values = [email];
+
+    const result = await client.query(preparedQuery, values);
+    return result.rows[0];
+  },
+
   async updateUser(userInfo) {
     const preparedQuery = `
     UPDATE "user"
