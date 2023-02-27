@@ -264,6 +264,24 @@ const dataMapper = {
     return result.rows[0];
   },
 
+  async removePoint(pointInfo) {
+    const preparedQuery = `
+    INSERT INTO "point" ("value", "content", "user_id", "house_id", "student_id")
+    VALUES ($1, $2, $3, NULLIF($4, '')::INT, NULLIF($5, '')::INT)
+    RETURNING *`;
+
+    const values = [
+      pointInfo.value,
+      pointInfo.content,
+      pointInfo.user_id,
+      pointInfo.house_id,
+      pointInfo.student_id,
+    ];
+
+    const result = await client.query(preparedQuery, values);
+    return result.rows[0];
+  },
+
   async getOnePoint(id) {
     const preparedQuery = `
     SELECT * FROM "point"

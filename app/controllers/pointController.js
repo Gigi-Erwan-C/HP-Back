@@ -23,6 +23,24 @@ const pointController = {
     }
   },
 
+  // eslint-disable-next-line consistent-return
+  async remove(req, res) {
+    try {
+      const pointInfo = req.body;
+      pointInfo.value = `-${req.body.value}`;
+
+      if ((!pointInfo.house_id && !pointInfo.student_id)
+      || (pointInfo.house_id && pointInfo.student_id)) {
+        return res.status(400).json({ error: 'Données incorrectes, merci de rééssayer' });
+      }
+
+      const result = await dataMapper.removePoint(pointInfo);
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error: 'Requête invalide' });
+    }
+  },
+
   async getOne(req, res) {
     const { id } = req.params;
     const onePoint = await dataMapper.getOnePoint(id);

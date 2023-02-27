@@ -36,7 +36,8 @@ router.get('/house/:id/student', houseController.getAllStudentsFromOneHouse);
 router.patch('/admin/house/:id', houseController.update);
 
 router.get('/point', pointController.getAll);
-router.post('/point', pointController.add);
+router.post('/point/add', pointController.add);
+router.post('/point/remove', pointController.remove);
 router.get('/point/:id', pointController.getOne);
 router.patch('/point/:id', pointController.update);
 router.delete('/point/:id', pointController.delete);
