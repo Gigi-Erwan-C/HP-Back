@@ -86,7 +86,7 @@ const dataMapper = {
   },
 
   async getAllStudents() {
-    const preparedQuery = 'SELECT * FROM "student"';
+    const preparedQuery = 'SELECT * FROM "student" ORDER BY "firstname"';
     const result = await client.query(preparedQuery);
     return result.rows;
   },
