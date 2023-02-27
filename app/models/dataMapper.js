@@ -8,7 +8,7 @@ const dataMapper = {
   },
 
   async getAllUsers() {
-    const preparedQuery = 'SELECT * FROM "user"';
+    const preparedQuery = 'SELECT * FROM "user" ORDER BY "firstname"';
     const results = await client.query(preparedQuery);
     return results.rows;
   },
