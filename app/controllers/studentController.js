@@ -6,6 +6,11 @@ const studentController = {
     res.json(students);
   },
 
+  async getTopFive(_, res) {
+    const topFiveStudents = await dataMapper.getTopFiveStudents();
+    res.json(topFiveStudents);
+  },
+
   async addStudent(req, res) {
     const studentInfo = req.body;
     const student = await dataMapper.addOneStudent(studentInfo);

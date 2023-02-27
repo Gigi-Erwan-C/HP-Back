@@ -91,6 +91,27 @@ const dataMapper = {
     return result.rows;
   },
 
+  async getTopFiveStudents() {
+    const preparedQuery = `SELECT
+    "student"."lastname",
+    "student"."firstname",
+    "house"."name" AS "house_name",
+    SUM ("value") AS "student_total_score"
+    FROM "point"
+    JOIN "student" ON "student"."id" = "student_id"
+    JOIN "house" ON "house"."id" = "student"."house_id"
+    GROUP BY
+    "student_id",
+    "student"."firstname",
+    "student"."house_id",
+    "house"."name",
+    "student"."lastname"
+    ORDER BY "student_total_score" DESC
+    LIMIT 5`;
+    const result = await client.query(preparedQuery);
+    return result.rows;
+  },
+
   async getAllHouses() {
     const preparedQuery = 'SELECT * FROM "house"';
     const result = await client.query(preparedQuery);
@@ -109,13 +130,15 @@ const dataMapper = {
     SET
       "name" = $1,
       "score" = $2,
+      "name_in_english" = $3,
       "updated_at" = now()
-    WHERE "id" = $3
+    WHERE "id" = $4
     RETURNING *`;
 
     const values = [
       houseInfo.name,
       houseInfo.score,
+      houseInfo.name_in_english,
       houseInfo.id,
     ];
 
@@ -310,7 +333,7 @@ const dataMapper = {
   },
 
   async updatePasswordByUser(obj) {
-    const preparedQuery = `UPDATE "user" SET "password" = $1 
+    const preparedQuery = `UPDATE "user" SET "password" = $1
    WHERE "id" = $2
    RETURNING *`;
 
