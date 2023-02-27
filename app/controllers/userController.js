@@ -97,9 +97,8 @@ const userController = {
       res.status(401).send({ errorMessage: 'Le mot de passe ou la combinaison est incorrecte.' });
       return;
     }
-    console.log(user);
+
     const isMatchingPassword = await bcrypt.compare(oldPassword, user.password);
-    console.log(isMatchingPassword);
     if (!isMatchingPassword) {
       res.status(401).send({ errorMessage: 'L\'ancien mot de passe est incorrecte.' });
       return;
