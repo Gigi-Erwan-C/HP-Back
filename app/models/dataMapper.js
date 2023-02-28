@@ -104,7 +104,7 @@ const dataMapper = {
     GROUP BY
     "student"."id",
     "house"."name"
-    ORDER BY "student_total_score" DESC
+    ORDER BY "student_total_score" DESC NULLS LAST
     LIMIT 5`;
     const result = await client.query(preparedQuery);
     return result.rows;
