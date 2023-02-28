@@ -17,7 +17,7 @@ const authController = {
     if (!isMatchingPassword) {
       return res.status(401).send({ errorMessage: 'E-mail ou mot de passe incorrecte' });
     }
-
+    result.isLogged = true;
     // eslint-disable-next-line max-len
     result.token = jwt.sign(result, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.status(200).json({ result });
