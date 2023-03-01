@@ -85,8 +85,14 @@ const dataMapper = {
     return (result.rowCount === 1);
   },
 
-  async getAllStudents() {
-    const preparedQuery = 'SELECT * FROM "student" ORDER BY "firstname"';
+  async getAllStudentsWithHouseName() {
+    const preparedQuery = `
+    SELECT
+    "student".*,
+    "house"."name" AS "house_name"
+    FROM "student"
+    JOIN "house" ON "house_id" = "house"."id"
+    ORDER BY "firstname"`;
     const result = await client.query(preparedQuery);
     return result.rows;
   },

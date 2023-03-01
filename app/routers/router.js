@@ -22,7 +22,7 @@ router.delete('/admin/user/:id', userController.delete);
 
 router.patch('/user/:id', userController.updatePassword);
 
-router.get('/student', studentController.getAll);
+router.get('/student', studentController.getAllWithHouseName);
 router.get('/student/top5', studentController.getTopFive);
 router.get('/student/total-score-and-house', studentController.getAllWithHouseAndTotalScore);
 router.get('/student/:id/score', studentController.getScoreByStudent);

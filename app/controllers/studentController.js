@@ -1,8 +1,8 @@
 const dataMapper = require('../models/dataMapper');
 
 const studentController = {
-  async getAll(_, res) {
-    const students = await dataMapper.getAllStudents();
+  async getAllWithHouseName(_, res) {
+    const students = await dataMapper.getAllStudentsWithHouseName();
     res.json(students);
   },
 
