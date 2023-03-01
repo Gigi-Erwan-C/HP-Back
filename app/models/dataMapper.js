@@ -111,7 +111,20 @@ const dataMapper = {
   },
 
   async getAllStudentsWithHouseAndTotalScore() {
-    const preparedQuery = 'SELECT * FROM "students_total_score" ORDER BY "firstname"';
+    const preparedQuery = `SELECT
+    "student"."id",
+    "firstname",
+    "lastname",
+    "student"."score",
+    "house"."name" AS "house_name",
+    COALESCE (SUM ("point"."value") + "student"."score", "student"."score") AS "student_total_score"
+    FROM "student"
+    LEFT OUTER JOIN "point" ON "student"."id" = "student_id"
+    JOIN "house" ON "house"."id" = "student"."house_id"
+    GROUP BY
+    "student"."id",
+    "house"."name"
+    ORDER BY "firstname";`;
     const result = await client.query(preparedQuery);
     return result.rows;
   },
