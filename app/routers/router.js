@@ -32,8 +32,8 @@ router.patch('/admin/student/:id', studentController.update);
 router.delete('/admin/student/:id', studentController.delete);
 
 router.get('/house', houseController.getAll);
+router.get('/house/total-score', houseController.getAllHousesWithScore);
 router.get('/house/:id', houseController.getOne);
-router.get('/house/total-score', houseController.getAllWithScore);
 router.get('/house/:id/student', houseController.getAllStudentsFromOneHouse);
 router.patch('/admin/house/:id', houseController.update);
 

@@ -111,25 +111,25 @@ const dataMapper = {
   },
 
   async getAllStudentsWithHouseAndTotalScore() {
-    const preparedQuery = `SELECT
-    "firstname",
-    "lastname",
-    "class_name",
-    "house"."name" AS "house_name",
-    COALESCE (SUM ("point"."value") + "student"."score", "student"."score") AS "student_total_score"
-    FROM "student"
-    LEFT OUTER JOIN "point" ON "student"."id" = "student_id"
-    JOIN "house" ON "house"."id" = "student"."house_id"
-    GROUP BY
-    "student"."id",
-    "house"."name"
-    ORDER BY "student"."firstname"`;
+    const preparedQuery = 'SELECT * FROM "students_total_score" ORDER BY "firstname"';
     const result = await client.query(preparedQuery);
     return result.rows;
   },
 
   async getAllHouses() {
-    const preparedQuery = 'SELECT * FROM "house"';
+    const preparedQuery = `SELECT
+    "house"."name",
+    "house"."name_in_english",
+    "house_total_score_from_students"."house_score_from_students" + "house_total_score_from_points"."house_score_from_points" AS "house_total_score"
+  FROM "house"
+  JOIN "house_total_score_from_students" ON "house"."name" = "house_total_score_from_students"."house_name"
+  JOIN "house_total_score_from_points" ON "house"."name" = "house_total_score_from_points"."house_name"
+  GROUP BY
+    "house"."name",
+    "house"."name_in_english",
+    "house_total_score_from_students"."house_score_from_students",
+    "house_total_score_from_points"."house_score_from_points"
+  ORDER BY "house_total_score" DESC NULLS LAST`;
     const result = await client.query(preparedQuery);
     return result.rows;
   },
@@ -139,15 +139,15 @@ const dataMapper = {
     "house"."name",
     "house"."name_in_english",
     "house_total_score_from_students"."house_score_from_students" + "house_total_score_from_points"."house_score_from_points" AS "house_total_score"
-    FROM "house"
-    JOIN "house_total_score_from_students" ON "house"."name" = "house_total_score_from_students"."house_name"
-    JOIN "house_total_score_from_points" ON "house"."name" = "house_total_score_from_points"."house_name"
-    GROUP BY
+  FROM "house"
+  JOIN "house_total_score_from_students" ON "house"."name" = "house_total_score_from_students"."house_name"
+  JOIN "house_total_score_from_points" ON "house"."name" = "house_total_score_from_points"."house_name"
+  GROUP BY
     "house"."name",
     "house"."name_in_english",
     "house_total_score_from_students"."house_score_from_students",
     "house_total_score_from_points"."house_score_from_points"
-    ORDER BY "house_total_score" DESC NULLS LAST`;
+  ORDER BY "house_total_score" DESC NULLS LAST`;
     const result = await client.query(preparedQuery);
     return result.rows;
   },

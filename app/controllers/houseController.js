@@ -19,7 +19,7 @@ const houseController = {
     res.json(result);
   },
 
-  async getAllWithScore(_, res) {
+  async getAllHousesWithScore(_, res) {
     const result = await dataMapper.getAllHousesWithScore();
     res.json(result);
   },
