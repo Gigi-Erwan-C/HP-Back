@@ -3,8 +3,9 @@
 BEGIN;
 
 DROP VIEW
-  "house_total_score_from_points",
-  "house_total_score_from_students",
+  "houses_total_score",
+  "houses_score_from_points",
+  "houses_score_from_students",
   "students_total_score";
 
 COMMIT;
