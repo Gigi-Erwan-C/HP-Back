@@ -99,6 +99,7 @@ const dataMapper = {
 
   async getTopFiveStudents() {
     const preparedQuery = `SELECT
+    "student"."id",
     "firstname",
     "lastname",
     "student"."score",
