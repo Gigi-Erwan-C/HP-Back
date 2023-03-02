@@ -142,17 +142,7 @@ const dataMapper = {
   },
 
   async getAllHousesWithScore() {
-    const preparedQuery = `SELECT
-    "house"."id",
-    "house"."name",
-    "house"."name_in_english",
-    SUM ("house_total_score_from_students"."house_score_from_students") + SUM("house_total_score_from_points"."house_score_from_points") AS "house_total_score"
-  FROM "house"
-  JOIN "house_total_score_from_students" ON "house"."name" = "house_total_score_from_students"."house_name"
-  JOIN "house_total_score_from_points" ON "house"."name" = "house_total_score_from_points"."house_name"
-  GROUP BY
-    "house"."id"
-  ORDER BY "house_total_score" DESC NULLS LAST`;
+    const preparedQuery = 'SELECT * FROM "houses_total_score"';
     const result = await client.query(preparedQuery);
     return result.rows;
   },
