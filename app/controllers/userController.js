@@ -2,11 +2,12 @@
 /* eslint-disable no-unused-vars */
 const emailValidator = require('email-validator');
 const bcrypt = require('bcrypt');
-const dataMapper = require('../models/dataMapper');
+// const userDataMapper = require('../models/userDataMapper');
+const { userDataMapper } = require('../models/index');
 
 const userController = {
   async getAll(_, res) {
-    const users = await dataMapper.getAllUsers();
+    const users = await userDataMapper.getAllUsers();
     res.json(users);
   },
 
@@ -30,7 +31,7 @@ const userController = {
 
     const encryptedPassword = await bcrypt.hash(password, saltRounds);
 
-    const user = await dataMapper.addUser({
+    const user = await userDataMapper.addUser({
       lastname,
       firstname,
       email,
@@ -43,7 +44,7 @@ const userController = {
 
   async getOne(req, res) {
     const { id } = req.params;
-    const user = await dataMapper.getOneUser(id);
+    const user = await userDataMapper.getOneUser(id);
     res.json(user);
   },
 
@@ -68,7 +69,7 @@ const userController = {
 
     const encryptedPassword = await bcrypt.hash(password, saltRounds);
 
-    const result = await dataMapper.updateUser({
+    const result = await userDataMapper.updateUser({
       lastname,
       firstname,
       email,
@@ -82,7 +83,7 @@ const userController = {
 
   async delete(req, res) {
     const { id } = req.params;
-    await dataMapper.deleteUser(id);
+    await userDataMapper.deleteUser(id);
     res.send('user deleted');
   },
 
@@ -92,7 +93,7 @@ const userController = {
       oldPassword, password, confirmation,
     } = req.body;
 
-    const user = await dataMapper.getOneUser(id);
+    const user = await userDataMapper.getOneUser(id);
     if (!user) {
       res.status(401).send({ errorMessage: 'Le mot de passe ou la combinaison est incorrecte.' });
       return;
@@ -118,7 +119,7 @@ const userController = {
 
     const encryptedPassword = await bcrypt.hash(password, saltRounds);
 
-    const result = await dataMapper.updatePasswordByUser({
+    const result = await userDataMapper.updatePasswordByUser({
       password: encryptedPassword,
       id,
     });

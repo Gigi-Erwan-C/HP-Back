@@ -1,8 +1,9 @@
-const dataMapper = require('../models/dataMapper');
+// const pointDataMapper = require('../models/pointDataMapper');
+const { pointDataMapper } = require('../models/index');
 
 const pointController = {
   async getAll(_, res) {
-    const result = await dataMapper.getAllPoints();
+    const result = await pointDataMapper.getAllPoints();
     res.json(result);
   },
 
@@ -16,7 +17,7 @@ const pointController = {
         return res.status(400).json({ error: 'Données incorrectes, merci de rééssayer' });
       }
 
-      const result = await dataMapper.addPoint(pointInfo);
+      const result = await pointDataMapper.addPoint(pointInfo);
       res.json(result);
     } catch (error) {
       res.status(500).json({ error: 'Requête invalide' });
@@ -34,7 +35,7 @@ const pointController = {
         return res.status(400).json({ error: 'Données incorrectes, merci de rééssayer' });
       }
 
-      const result = await dataMapper.removePoint(pointInfo);
+      const result = await pointDataMapper.removePoint(pointInfo);
       res.json(result);
     } catch (error) {
       res.status(500).json({ error: 'Requête invalide' });
@@ -43,20 +44,20 @@ const pointController = {
 
   async getOne(req, res) {
     const { id } = req.params;
-    const onePoint = await dataMapper.getOnePoint(id);
+    const onePoint = await pointDataMapper.getOnePoint(id);
     res.json(onePoint);
   },
 
   async update(req, res) {
     const { id } = req.params;
     const point = req.body;
-    const updatePoint = await dataMapper.updateOnePoint({ ...point, id });
+    const updatePoint = await pointDataMapper.updateOnePoint({ ...point, id });
     res.json(updatePoint);
   },
 
   async delete(req, res) {
     const { id } = req.params;
-    await dataMapper.deleteOnePoint(id);
+    await pointDataMapper.deleteOnePoint(id);
     res.send('Your point(s) have been deleted');
   },
 };

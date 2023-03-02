@@ -1,13 +1,14 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const dataMapper = require('../models/dataMapper');
+// const authDataMapper = require('../models/authDataMapper');
+const { authDataMapper } = require('../models/index');
 
 const authController = {
   // eslint-disable-next-line consistent-return
   async login(req, res) {
     const { email, password } = req.body;
 
-    const result = await dataMapper.getOneUserByEmail(email);
+    const result = await authDataMapper.getOneUserByEmail(email);
 
     if (!result) {
       return res.status(401).json({ message: 'E-mail ou mot de passe incorrecte' });

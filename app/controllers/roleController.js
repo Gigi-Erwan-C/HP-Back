@@ -1,9 +1,9 @@
-const dataMapper = require('../models/dataMapper');
+// const roleDataMapper = require('../models/roleDataMapper');
+const { roleDataMapper } = require('../models/index');
 
 const roleController = {
   async getRole(_, res) {
-    const role = await dataMapper.getAllRoles();
-    console.log(role);
+    const role = await roleDataMapper.getAllRoles();
     res.json(role);
   },
 };
