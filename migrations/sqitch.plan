@@ -4,3 +4,4 @@
 init 2023-02-17T13:06:42Z JM Laffargue <laffargue.jm@gmail.com> # create tables in db
 HP_revision1 2023-02-23T07:34:39Z Gigi <gigi46.hd48@gmail.com> # alter tables delete specify NOT NULL
 create_views_to_get_scores 2023-02-28T13:16:05Z JM Laffargue <laffargue.jm@gmail.com> # Create views to get houses total scores from table point et table student
+HP_revision2 2023-03-03T16:32:55Z JM Laffargue <laffargue.jm@gmail.com> # ajout de DELETE CASCADE sur la clé étrangère student_id de la table "point" pour supprimer un élève
