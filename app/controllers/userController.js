@@ -42,17 +42,11 @@ const userController = {
     res.json(user);
   },
 
-  async getOne(req, res) {
-    const { id } = req.params;
-    const user = await userDataMapper.getOneUser(id);
-    res.json(user);
-  },
-
   async update(req, res) {
     const { id } = req.params;
     const {
       // eslint-disable-next-line camelcase
-      lastname, firstname, email, password, role_id,
+      lastname, firstname, email, role_id,
     } = req.body;
 
     if (!emailValidator.validate(email)) {
@@ -60,22 +54,31 @@ const userController = {
       return;
     }
 
+    const result = await userDataMapper.updateUser({
+      lastname,
+      firstname,
+      email,
+      // eslint-disable-next-line camelcase
+      role_id,
+      id,
+    });
+    res.json(result);
+  },
+
+  async updatePasswordByAdmin(req, res) {
+    const { id } = req.params;
+    const { password } = req.body;
+
     if (!password || password.length < 4) {
       res.status(400).send({ message: 'Le mot de passe doit faire plus de 4 caractères.' });
-      return;
     }
 
     const saltRounds = parseInt(process.env.SALT_ROUNDS, 10);
 
     const encryptedPassword = await bcrypt.hash(password, saltRounds);
 
-    const result = await userDataMapper.updateUser({
-      lastname,
-      firstname,
-      email,
+    const result = await userDataMapper.updatePasswordByAdmin({
       password: encryptedPassword,
-      // eslint-disable-next-line camelcase
-      role_id,
       id,
     });
     res.json(result);
@@ -87,7 +90,7 @@ const userController = {
     res.send('user deleted');
   },
 
-  async updatePassword(req, res) {
+  async updatePasswordByUser(req, res) {
     const { id } = req.params;
     const {
       oldPassword, password, confirmation,
