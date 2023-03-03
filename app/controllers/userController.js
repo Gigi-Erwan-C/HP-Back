@@ -42,12 +42,6 @@ const userController = {
     res.json(user);
   },
 
-  async getOne(req, res) {
-    const { id } = req.params;
-    const user = await userDataMapper.getOneUser(id);
-    res.json(user);
-  },
-
   async update(req, res) {
     const { id } = req.params;
     const {

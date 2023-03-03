@@ -9,9 +9,9 @@ const userDataMapper = {
 
   async addUser(userInfo) {
     const preparedQuery = `
-    INSERT INTO "user" ("lastname", "firstname", "email", "password", "role_id")
-    VALUES ($1, $2, $3, $4, $5)
-    RETURNING *`;
+      INSERT INTO "user" ("lastname", "firstname", "email", "password", "role_id")
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING *`;
 
     const values = [
       `${userInfo.lastname}`,
@@ -23,12 +23,6 @@ const userDataMapper = {
 
     const result = await client.query(preparedQuery, values);
 
-    return result.rows[0];
-  },
-
-  async getOneUser(id) {
-    const preparedQuery = `SELECT * FROM "user" WHERE "id" = ${id}`;
-    const result = await client.query(preparedQuery);
     return result.rows[0];
   },
 
@@ -76,8 +70,8 @@ const userDataMapper = {
 
   async deleteUser(id) {
     const preparedQuery = `
-    DELETE FROM "user"
-    WHERE "id" = $1`;
+      DELETE FROM "user"
+      WHERE "id" = $1`;
 
     const values = [`${id}`];
 
@@ -88,9 +82,9 @@ const userDataMapper = {
 
   async checkUserInfo(userInfo) {
     const preparedQuery = `
-    SELECT * FROM "user"
-    WHERE "email" = $1
-    AND "password" = $2`;
+      SELECT * FROM "user"
+      WHERE "email" = $1
+      AND "password" = $2`;
 
     const values = [
       `${userInfo.email}`,
@@ -102,9 +96,11 @@ const userDataMapper = {
   },
 
   async updatePasswordByUser(obj) {
-    const preparedQuery = `UPDATE "user" SET "password" = $1
-   WHERE "id" = $2
-   RETURNING *`;
+    const preparedQuery = `
+      UPDATE "user"
+      SET "password" = $1
+      WHERE "id" = $2
+      RETURNING *`;
 
     const values = [
       obj.password,
