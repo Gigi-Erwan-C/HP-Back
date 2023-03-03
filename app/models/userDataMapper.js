@@ -39,18 +39,34 @@ const userDataMapper = {
       "lastname" = $1,
       "firstname" = $2,
       "email" = $3,
-      "password" = $4,
-      "role_id" = $5,
+      "role_id" = $4,
       "updated_at" = now()
-    WHERE "id" = $6
+    WHERE "id" = $5
     RETURNING *`;
 
     const values = [
       `${userInfo.lastname}`,
       `${userInfo.firstname}`,
       `${userInfo.email}`,
-      `${userInfo.password}`,
       `${userInfo.role_id}`,
+      `${userInfo.id}`,
+    ];
+
+    const result = await client.query(preparedQuery, values);
+    return result.rows[0];
+  },
+
+  async updatePasswordByAdmin(userInfo) {
+    const preparedQuery = `
+    UPDATE "user"
+    SET
+      "password" = $1,
+      "updated_at" = now()
+    WHERE "id" = $2
+    RETURNING *`;
+
+    const values = [
+      `${userInfo.password}`,
       `${userInfo.id}`,
     ];
 
