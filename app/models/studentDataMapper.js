@@ -90,7 +90,7 @@ const studentDataMapper = {
 
   async deleteOneStudent(id) {
     const preparedQuery = `
-      DELETE CASCADE FROM "student"
+      DELETE FROM "student"
       WHERE "id" = $1`;
 
     const values = [`${id}`];
