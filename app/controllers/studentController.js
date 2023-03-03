@@ -2,6 +2,7 @@
 const { studentDataMapper } = require('../models/index');
 
 const studentController = {
+
   async getAllWithHouseName(_, res) {
     const students = await studentDataMapper.getAllStudentsWithHouseName();
     res.json(students);
@@ -23,12 +24,6 @@ const studentController = {
     res.json(student);
   },
 
-  async getOne(req, res) {
-    const { id } = req.params;
-    const student = await studentDataMapper.getOneStudent(id);
-    res.json(student);
-  },
-
   async update(req, res) {
     const { id } = req.params;
     const student = req.body;
@@ -39,13 +34,7 @@ const studentController = {
   async delete(req, res) {
     const { id } = req.params;
     await studentDataMapper.deleteOneStudent(id);
-    res.send('Your student is dead');
-  },
-
-  async getScoreByStudent(req, res) {
-    const { id } = req.params;
-    const student = await studentDataMapper.getStudentScore(id);
-    res.json(student);
+    res.json({ message: 'Elève supprimé' });
   },
 
 };

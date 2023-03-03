@@ -5,6 +5,7 @@ BEGIN;
 -- Création d'une VIEW pour récupérer le score total des étudiants (score de base + total des points obtenus dans la table "point")
 CREATE VIEW "students_total_score" AS
   SELECT
+    "student"."id",
     "firstname",
     "lastname",
     "house"."name" AS "house_name",
@@ -14,7 +15,7 @@ CREATE VIEW "students_total_score" AS
     COALESCE (SUM ("point"."value") + "student"."score", "student"."score")::INT AS "total_score"
   FROM "student"
   LEFT OUTER JOIN "point" ON "student"."id" = "student_id"
-  JOIN "house" ON "house"."id" = "student"."house_id"
+  RIGHT OUTER JOIN "house" ON "house"."id" = "student"."house_id"
   GROUP BY
     "student"."id",
     "house"."id";
@@ -23,7 +24,7 @@ CREATE VIEW "students_total_score" AS
 CREATE VIEW "houses_score_from_students" AS
   SELECT
     "house_name",
-    SUM ("total_score")::INT AS "total_score"
+    COALESCE (SUM ("total_score"), 0)::INT AS "total_score"
   FROM "students_total_score"
   GROUP BY "house_name";
 
