@@ -4,7 +4,9 @@ BEGIN;
 
 ALTER TABLE
   "point"
-  ALTER COLUMN
-  "student_id" DROP ON DELETE CASCADE;
+  DROP CONSTRAINT "point_student_id_fkey",
+  ADD CONSTRAINT "point_student_id_fkey"
+    FOREIGN KEY ("student_id")
+    REFERENCES "student"("id");
 
 COMMIT;
