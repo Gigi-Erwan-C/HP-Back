@@ -1,0 +1,258 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "harry-potter-back",
+        "description": "Le BackMagic d'Harry Potter",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "D.RES"
+        },
+        "license": {
+            "name": "REMULAMOGI"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/x-www-form-urlencoded"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Authentification des utilisateurs d'Harry Potter"
+        },
+        {
+            "name": "House",
+            "description": "Maisons d'Harry Potter"
+        },
+        {
+            "name": "Point",
+            "description": "Points d'Harry Potter"
+        },
+        {
+            "name": "Role",
+            "description": "Rôles des users d'Harry Potter"
+        },
+        {
+            "name": "Student",
+            "description": "Élèves d'Harry Potter"
+        },
+        {
+            "name": "User",
+            "description": "Utilisateurs d'Harry Potter"
+        }
+    ],
+    "paths": {
+        "/auth": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "description": "Permet d'accéder à l'interface utilisateur prof/admin pour la gestion du game",
+                "operationId": "verifyAuth",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "description": "Information de l'utilisateur",
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "email",
+                                "password"
+                            ],
+                            "properties": {
+                                "email": {
+                                    "type": "string",
+                                    "example": "Email de l'utilisateur"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "example": "Password de l'utilisateur correspondant"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "L'authentification est réussie'",
+                        "schema": {
+                            "$ref": "#/definitions/Auth"
+                        }
+                    },
+                    "400": {
+                        "description": "L'email ou le password n'est pas correct",
+                        "schema": {
+                            "properties": {
+                                "error": {
+                                    "type": "string",
+                                    "example": "Error body parameter: name or password"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/house": {
+            "get": {
+                "tags": [
+                    "House"
+                ],
+                "description": "Retourne l'ensemble des Maisons existantes",
+                "operationId": "getHouses",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Un tableau de Maisons",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/House"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/house/total-score": {
+            "get": {
+                "tags": [
+                    "House"
+                ],
+                "description": "Retourne l'ensemble des Maisons existantes avec leur score total(base + points des élèves associés + points de la maison) par ordre décroissant",
+                "operationId": "getHousesWithScore",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Un tableau de Maisons avec le total de point",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/House"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/house/:id": {
+            "get": {
+                "tags": [
+                    "House"
+                ],
+                "description": "Retourne une maison par l'id",
+                "operationId": "getOneHouse",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "description": "L'ID de la Maison à récupérer",
+                        "type": "number"
+                    },
+                    {
+                        "in": "body",
+                        "description": "Id à choisir",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "int",
+                                    "example": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Une Maison",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/House"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Auth": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "aaa@bbb.com"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "Mot de passe"
+                }
+            }
+        },
+        "House": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Nom de la Maison"
+                },
+                "name_in_english": {
+                    "type": "string",
+                    "example": "Nom de la Maison en anglais"
+                },
+                "score": {
+                    "type": "number",
+                    "example": 1
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2023-01-01T12:00:00.000Z"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2023-01-01T12:00:00.000Z"
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": "Unexpected server error. Please try again later."
+                }
+            }
+        }
+    }
+}
