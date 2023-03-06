@@ -20,8 +20,8 @@ const authController = {
     }
     result.isLogged = true;
     // eslint-disable-next-line max-len
-    result.token = jwt.sign(result, process.env.JWT_SECRET, { expiresIn: '90d' });
-    res.status(200).json({ result });
+    const token = jwt.sign(result, process.env.JWT_SECRET, { expiresIn: '90d' });
+    res.status(200).json({ token });
   },
 };
 
