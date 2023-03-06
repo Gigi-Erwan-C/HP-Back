@@ -88,7 +88,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "L'authentification est réussie'",
+                        "description": "L'authentification est réussie",
                         "schema": {
                             "$ref": "#/definitions/Auth"
                         }
@@ -101,29 +101,6 @@
                                     "type": "string",
                                     "example": "Error body parameter: name or password"
                                 }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/house": {
-            "get": {
-                "tags": [
-                    "House"
-                ],
-                "description": "Retourne l'ensemble des Maisons existantes",
-                "operationId": "getHouses",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Un tableau de Maisons",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/House"
                             }
                         }
                     }
@@ -153,13 +130,13 @@
                 }
             }
         },
-        "/house/:id": {
-            "get": {
+        "/admin/house/:id": {
+            "patch": {
                 "tags": [
                     "House"
                 ],
-                "description": "Retourne une maison par l'id",
-                "operationId": "getOneHouse",
+                "description": "Retourne une maison par l'id pour la modifier",
+                "operationId": "updateOneHouse",
                 "produces": [
                     "application/json"
                 ],
@@ -169,18 +146,26 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "description": "L'ID de la Maison à récupérer",
+                        "description": "L'ID de la Maison à modifier",
                         "type": "number"
                     },
                     {
                         "in": "body",
-                        "description": "Id à choisir",
+                        "description": "Champs à modifier",
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "id": {
-                                    "type": "int",
-                                    "example": 1
+                                "name": {
+                                    "type": "string",
+                                    "example": "Nom de la maison"
+                                },
+                                "name_in_english": {
+                                    "type": "string",
+                                    "example": "Nom de la maison en anglais"
+                                },
+                                "score": {
+                                    "type": "number",
+                                    "example": -8000
                                 }
                             }
                         }
@@ -188,11 +173,411 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Une Maison",
+                        "description": "La Maison mise à jour",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/House"
+                                "$ref": "#/definitions/House",
+                                "example": "Ça fonctionne !!!!!"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "L'ID fourni ne correspond à aucune maison",
+                        "schema": {
+                            "properties": {
+                                "error": {
+                                    "type": "string",
+                                    "example": "House not found. Please verify the provided id."
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/point/add": {
+            "post": {
+                "tags": [
+                    "Point"
+                ],
+                "description": "Permet d'ajouter des points aus élèves et maisons",
+                "operationId": "addPoint",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "description": "Information sur les points attribués",
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "value",
+                                "content"
+                            ],
+                            "properties": {
+                                "value": {
+                                    "type": "number",
+                                    "example": "123"
+                                },
+                                "content": {
+                                    "type": "string",
+                                    "example": "Motif des points attribués à l'élève ou la maison"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "L'ajout de points à fonctionné",
+                        "schema": {
+                            "$ref": "#/definitions/Point"
+                        }
+                    },
+                    "400": {
+                        "description": "La valeur ou le motif n'est pas correct",
+                        "schema": {
+                            "properties": {
+                                "error": {
+                                    "type": "string",
+                                    "example": "Error body parameter: value or content"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/point/remove": {
+            "post": {
+                "tags": [
+                    "Point"
+                ],
+                "description": "Permet d'enlever des points aus élèves et maisons",
+                "operationId": "removePoint",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "description": "Information sur les points retirés",
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "value",
+                                "content"
+                            ],
+                            "properties": {
+                                "value": {
+                                    "type": "number",
+                                    "example": "123"
+                                },
+                                "content": {
+                                    "type": "string",
+                                    "example": "Motif des points retirés à l'élève ou la maison"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "La suppression de points à fonctionné",
+                        "schema": {
+                            "$ref": "#/definitions/Point"
+                        }
+                    },
+                    "400": {
+                        "description": "La valeur ou le motif n'est pas correct",
+                        "schema": {
+                            "properties": {
+                                "error": {
+                                    "type": "string",
+                                    "example": "Error body parameter: value or content"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/role": {
+            "get": {
+                "tags": [
+                    "Role"
+                ],
+                "description": "Retourne l'ensemble des rôles existants",
+                "operationId": "getRole",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Un tableau des rôles disponibles",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Role"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/student": {
+            "get": {
+                "tags": [
+                    "Student"
+                ],
+                "description": "Retourne l'ensemble des élèves et la maison associée",
+                "operationId": "getStudents",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Un tableau des élèves et leurs maisons",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Student"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/student/top5": {
+            "get": {
+                "tags": [
+                    "Student"
+                ],
+                "description": "Retourne les 5 meilleurs élèves",
+                "operationId": "getTopStudents",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Un tableau des 5 meilleurs élèves",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Student"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/student/total-score-and-house": {
+            "get": {
+                "tags": [
+                    "Student"
+                ],
+                "description": "Retourne l'ensemble des élèves, leurs maisons et leurs scores totaux",
+                "operationId": "getStudentsScoreHouses",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Un tableau des élèves et leurs maisons avec les scores totaux",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Student"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/student": {
+            "post": {
+                "tags": [
+                    "Student"
+                ],
+                "description": "Permet d'jouter des élèves",
+                "operationId": "addStudent",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "description": "Information sur l'élève à ajouter'",
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "lastname",
+                                "firstname"
+                            ],
+                            "properties": {
+                                "lastname": {
+                                    "type": "string",
+                                    "example": "Nom de famille de l'élève"
+                                },
+                                "firstname": {
+                                    "type": "string",
+                                    "example": "Prénom de l'élève"
+                                },
+                                "class_name": {
+                                    "type": "string",
+                                    "example": "Le nom de la classe de l'élève"
+                                },
+                                "score": {
+                                    "type": "number",
+                                    "example": "Le score de base de l'élève au début du jeu"
+                                },
+                                "house_id": {
+                                    "type": "number",
+                                    "example": "L'identifiant de la maison à laquelle appartient l'élève"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "L'élève est créé !",
+                        "schema": {
+                            "$ref": "#/definitions/Student"
+                        }
+                    },
+                    "400": {
+                        "description": "Le prénom ou le nom n'est pas enregistré",
+                        "schema": {
+                            "properties": {
+                                "error": {
+                                    "type": "string",
+                                    "example": "Error body parameter: lastname or firstname"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/student/:id": {
+            "patch": {
+                "tags": [
+                    "Student"
+                ],
+                "description": "Retourne un élève par l'id pour le modifier",
+                "operationId": "updateOneStudent",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "description": "L'ID de l'élève à modifier",
+                        "type": "number"
+                    },
+                    {
+                        "in": "body",
+                        "description": "Champs à modifier",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "lastname": {
+                                    "type": "string",
+                                    "example": "Nom de famille de l'élève"
+                                },
+                                "firstname": {
+                                    "type": "string",
+                                    "example": "Prénom de l'élève"
+                                },
+                                "class_name": {
+                                    "type": "string",
+                                    "example": "Nom de la classe de l'élève"
+                                },
+                                "score": {
+                                    "type": "number",
+                                    "example": -8000
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "La Maison mise à jour",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/House",
+                                "example": "Ça fonctionne !!!!!"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "L'ID fourni ne correspond à aucune maison",
+                        "schema": {
+                            "properties": {
+                                "error": {
+                                    "type": "string",
+                                    "example": "House not found. Please verify the provided id."
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Student"
+                ],
+                "description": "Retourne un élève par l'id pour le supprimer",
+                "operationId": "deleteOneStudent",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "description": "L'ID de l'élève à supprimer",
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "La Maison mise à jour",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/House",
+                                "example": "Ça fonctionne !!!!!"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "L'ID fourni ne correspond à aucune maison",
+                        "schema": {
+                            "properties": {
+                                "error": {
+                                    "type": "string",
+                                    "example": "House not found. Please verify the provided id."
+                                }
                             }
                         }
                     }
@@ -232,6 +617,111 @@
                 "score": {
                     "type": "number",
                     "example": 1
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2023-01-01T12:00:00.000Z"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2023-01-01T12:00:00.000Z"
+                }
+            }
+        },
+        "Point": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "value": {
+                    "type": "number",
+                    "example": 1
+                },
+                "content": {
+                    "type": "string",
+                    "example": "Motif des points attribués/enlevés"
+                },
+                "user_id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "house_id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "student_id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2023-01-01T12:00:00.000Z"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2023-01-01T12:00:00.000Z"
+                }
+            }
+        },
+        "Role": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Nom du rôle"
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2023-01-01T12:00:00.000Z"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2023-01-01T12:00:00.000Z"
+                }
+            }
+        },
+        "Student": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "lastname": {
+                    "type": "string",
+                    "example": "Nom de famille de l'élève"
+                },
+                "firstname": {
+                    "type": "string",
+                    "example": "Prénom de l'élève"
+                },
+                "class_name": {
+                    "type": "string",
+                    "example": "Le nom/numéro de la classe de l'élève"
+                },
+                "score": {
+                    "type": "number",
+                    "example": 100
+                },
+                "house_id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "house_name": {
+                    "type": "string",
+                    "example": "Le nom de ma maison"
                 },
                 "created_at": {
                     "type": "string",
