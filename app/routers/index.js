@@ -16,4 +16,6 @@ router.use(roleRouter);
 router.use(studentRouter);
 router.use(userRouter);
 
+router.get('/', (_, res) => { res.render('home'); });
+
 module.exports = router;
