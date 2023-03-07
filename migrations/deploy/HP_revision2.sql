@@ -2,8 +2,7 @@
 
 BEGIN;
 
-ALTER TABLE
-  "point"
+ALTER TABLE "point"
   DROP CONSTRAINT "point_student_id_fkey",
   ADD CONSTRAINT "point_student_id_fkey"
     FOREIGN KEY ("student_id")
