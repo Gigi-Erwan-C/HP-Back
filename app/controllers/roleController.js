@@ -6,6 +6,11 @@ const roleController = {
     const role = await roleDataMapper.getAllRoles();
     res.json(role);
   },
+
+  async getTest(_,res) {
+    const y = x + 7
+    res.json (y);
+  }
 };
 
 module.exports = roleController;

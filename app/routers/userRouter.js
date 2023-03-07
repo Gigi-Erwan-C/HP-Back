@@ -2,18 +2,20 @@ const { Router } = require('express');
 
 const userController = require('../controllers/userController');
 
-const router = Router();
+const controllerHandler = require('../controllers/helpers/controllerHandler');
 
 const isAdmin = require('../middlewares/isAdmin');
 const isLogged = require('../middlewares/isLogged');
 
-router.get('/admin/user', isAdmin, userController.getAll);
-router.post('/admin/user', isAdmin, userController.add);
+const router = Router();
 
-router.patch('/admin/user/password/:id', isAdmin, userController.updatePasswordByAdmin);
-router.patch('/admin/user/:id', isAdmin, userController.update);
-router.delete('/admin/user/:id', isAdmin, userController.delete);
+router.get('/admin/user', isAdmin, controllerHandler(userController.getAll));
+router.post('/admin/user', isAdmin, controllerHandler(userController.add));
 
-router.patch('/user/:id', isLogged, userController.updatePasswordByUser);
+router.patch('/admin/user/password/:id', isAdmin, controllerHandler(userController.updatePasswordByAdmin));
+router.patch('/admin/user/:id', isAdmin, controllerHandler(userController.update));
+router.delete('/admin/user/:id', isAdmin, controllerHandler(userController.delete));
+
+router.patch('/user/:id', isLogged, controllerHandler(userController.updatePasswordByUser));
 
 module.exports = router;
