@@ -518,22 +518,22 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "La Maison mise à jour",
+                        "description": "L'élève mis à jour",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/House",
+                                "$ref": "#/definitions/Student",
                                 "example": "Ça fonctionne !!!!!"
                             }
                         }
                     },
                     "404": {
-                        "description": "L'ID fourni ne correspond à aucune maison",
+                        "description": "L'ID fourni ne correspond à aucun élève",
                         "schema": {
                             "properties": {
                                 "error": {
                                     "type": "string",
-                                    "example": "House not found. Please verify the provided id."
+                                    "example": "Student not found. Please verify the provided id."
                                 }
                             }
                         }
@@ -561,22 +561,352 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "La Maison mise à jour",
+                        "description": "L'élève is dead",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/House",
+                                "$ref": "#/definitions/Student",
                                 "example": "Ça fonctionne !!!!!"
                             }
                         }
                     },
                     "404": {
-                        "description": "L'ID fourni ne correspond à aucune maison",
+                        "description": "L'ID fourni ne correspond à aucun élève",
                         "schema": {
                             "properties": {
                                 "error": {
                                     "type": "string",
-                                    "example": "House not found. Please verify the provided id."
+                                    "example": "Student not found. Please verify the provided id."
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/user": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "description": "Retourne l'ensemble des professeurs/admin",
+                "operationId": "getUser",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Un tableau des professeurs/admin",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/User"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "description": "Permet d'ajouter des professeurs/admin",
+                "operationId": "addUser",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "description": "Information sur le professeurs/admin à ajouter'",
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "lastname",
+                                "firstname",
+                                "email",
+                                "password",
+                                "role_id"
+                            ],
+                            "properties": {
+                                "lastname": {
+                                    "type": "string",
+                                    "example": "Nom de famille du professeurs/admin"
+                                },
+                                "firstname": {
+                                    "type": "string",
+                                    "example": "Prénom du professeurs/admin"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "example": "L'email du professeurs/admin'"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "example": "Le mot de passe du professeurs/admin"
+                                },
+                                "role_id": {
+                                    "type": "number",
+                                    "example": "L'identifiant du rôle du professeurs/admin"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Le professeurs/admin est créé !",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "400": {
+                        "description": "Un des champs requis n'est pas enregistré",
+                        "schema": {
+                            "properties": {
+                                "error": {
+                                    "type": "string",
+                                    "example": "Error body parameter: lastname or firstname or email or password or role_id required"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/user/password/:id": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "description": "Retourne un professeur/admin par l'id pour modifier son mot de passe",
+                "operationId": "updateUserPasswordByAdmin",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "description": "L'ID du professeur/admin à modifier",
+                        "type": "number"
+                    },
+                    {
+                        "in": "body",
+                        "description": "Champs à modifier",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "password": {
+                                    "type": "string",
+                                    "example": "Mot de passe du professeur/admin"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Le mot de passe du professeur/admin mis à jour",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/User",
+                                "example": "Ça fonctionne !!!!!"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "L'ID fourni ne correspond à aucun professeur/admin",
+                        "schema": {
+                            "properties": {
+                                "error": {
+                                    "type": "string",
+                                    "example": "User not found. Please verify the provided id."
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/user/:id": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "description": "Retourne un professeur/admin par l'id pour le modifier",
+                "operationId": "updateOneUser",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "description": "L'ID du professeur/admin à modifier",
+                        "type": "number"
+                    },
+                    {
+                        "in": "body",
+                        "description": "Champs à modifier",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "lastname": {
+                                    "type": "string",
+                                    "example": "Nom de famille du professeur/admin"
+                                },
+                                "firstname": {
+                                    "type": "string",
+                                    "example": "Prénom du professeur/admin"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "example": "Email du professeur/admin"
+                                },
+                                "role_id": {
+                                    "type": "number",
+                                    "example": "Rôle du professeur/admin"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Les infos du professeur/admin mis à jour",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/User",
+                                "example": "Ça fonctionne !!!!!"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "L'ID fourni ne correspond à aucun professeur/admin",
+                        "schema": {
+                            "properties": {
+                                "error": {
+                                    "type": "string",
+                                    "example": "User not found. Please verify the provided id."
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "description": "Retourne un professeur/admin par l'id pour le supprimer",
+                "operationId": "deleteOneUser",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "description": "L'ID du professeur/admin à supprimer",
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Le professeur/admin is dead",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/User",
+                                "example": "Ça fonctionne !!!!!"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "L'ID fourni ne correspond à aucun professeur/admin",
+                        "schema": {
+                            "properties": {
+                                "error": {
+                                    "type": "string",
+                                    "example": "User not found. Please verify the provided id."
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/:id": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "description": "Retourne un professeur/admin par l'id pour modifier son mot de passe",
+                "operationId": "updatePasswordByUser",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "description": "L'ID du professeur/admin à modifier",
+                        "type": "number"
+                    },
+                    {
+                        "in": "body",
+                        "description": "Champs à modifier",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "oldPassword": {
+                                    "type": "string",
+                                    "example": "Ancien mot de passe du professeur/admin"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "example": "Nouveau mot de passe du professeur/admin"
+                                },
+                                "confirmation": {
+                                    "type": "string",
+                                    "example": "Confirmation du nouveau mot de passe du professeur/admin"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Le mot de passe du professeur/admin mis à jour",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/User",
+                                "example": "Ça fonctionne !!!!!"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "L'ID fourni ne correspond à aucun professeur/admin",
+                        "schema": {
+                            "properties": {
+                                "error": {
+                                    "type": "string",
+                                    "example": "User not found. Please verify the provided id."
                                 }
                             }
                         }
@@ -722,6 +1052,45 @@
                 "house_name": {
                     "type": "string",
                     "example": "Le nom de ma maison"
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2023-01-01T12:00:00.000Z"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2023-01-01T12:00:00.000Z"
+                }
+            }
+        },
+        "User": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "lastname": {
+                    "type": "string",
+                    "example": "Nom de famille du professeur/admin"
+                },
+                "firstname": {
+                    "type": "string",
+                    "example": "Prénom du professeur/admin"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "L'email du professeur/admin"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "Le mot de passe du professeur/admin"
+                },
+                "role_id": {
+                    "type": "number",
+                    "example": 1
                 },
                 "created_at": {
                     "type": "string",
