@@ -4,6 +4,7 @@ module.exports = {
     es2021: true,
     node: true,
   },
+  plugins: ['ejs'],
   extends: 'airbnb-base',
   overrides: [
   ],
