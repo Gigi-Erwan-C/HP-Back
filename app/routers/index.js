@@ -26,7 +26,7 @@ router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // On redirige toutes les requêtes perdues sur la route de documentation
 router.use((req, res) => {
-  res.redirect('/apidocs');
+  res.redirect('/api-docs');
 });
 
 module.exports = router;
