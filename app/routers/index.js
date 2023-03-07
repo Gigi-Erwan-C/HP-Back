@@ -1,7 +1,7 @@
 const express = require('express');
 
 // Imports pour la documentation Swagger
-// eslint-disable-next-line import/no-extraneous-dependencies
+// eslint-disable-next-line import/no-extraneous-dependencies, import/no-unresolved
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
