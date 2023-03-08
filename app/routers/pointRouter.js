@@ -9,7 +9,7 @@ const isAdmin = require('../middlewares/isAdmin');
 
 const router = Router();
 
-router.get('/point', isAdmin, controllerHandler(pointController.getAll));
+router.get('/point', isLogged, controllerHandler(pointController.getAll));
 router.post('/point/add', isLogged, controllerHandler(pointController.add));
 router.post('/point/remove', isLogged, controllerHandler(pointController.remove));
 router.get('/point/:id', isAdmin, controllerHandler(pointController.getOne));
