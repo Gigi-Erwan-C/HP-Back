@@ -310,6 +310,29 @@
                 }
             }
         },
+        "/point/log": {
+            "get": {
+                "tags": [
+                    "Point"
+                ],
+                "description": "Retourne les 100 derniers points attribués",
+                "operationId": "getPointLog",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Un tableau des 100 derniers points attribués",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Point"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/role": {
             "get": {
                 "tags": [
