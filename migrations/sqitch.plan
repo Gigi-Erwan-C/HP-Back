@@ -6,3 +6,4 @@ HP_revision1 2023-02-23T07:34:39Z Gigi <gigi46.hd48@gmail.com> # alter tables de
 create_views_to_get_scores 2023-02-28T13:16:05Z JM Laffargue <laffargue.jm@gmail.com> # Create views to get houses total scores from table point et table student
 HP_revision2 2023-03-03T16:32:55Z JM Laffargue <laffargue.jm@gmail.com> # ajout de DELETE CASCADE sur la clé étrangère student_id de la table "point" pour supprimer un élève
 HP_revision3 2023-03-06T13:54:06Z JM Laffargue <laffargue.jm@gmail.com> # add unique constraint on table student for firstname and lastname
+HP_revision4 2023-03-09T10:37:46Z JM Laffargue <laffargue.jm@gmail.com> # ajout de ON DELETE CASCADE sur la clé étrangère user_id de la table "point" pour pouvoir supprimer un utilisateur
