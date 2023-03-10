@@ -22,7 +22,6 @@ const schemas = {
     oldPassword: Joi.string().required(),
     password: Joi.string().required(),
     confirmation: Joi.string().required(),
-    user_id: Joi.number().integer().required(),
   }).required(),
 };
 
