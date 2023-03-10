@@ -1,4 +1,12 @@
+#npm
 node_modules/
+
+#config
 .env
 sqitch.conf
+
+#OS X
 .DS_Store
+
+#test
+coverage/
