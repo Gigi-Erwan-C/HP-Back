@@ -5,6 +5,7 @@ const schemas = {
         name: Joi.string().required(),
         score: Joi.number().integer(),
         name_in_english: Joi.string(),
+        user_id: Joi.number().integer().required(),
     }).required(),
 };
 

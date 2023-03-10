@@ -7,6 +7,7 @@ const schemas = {
     class_name: Joi.string(),
     score: Joi.number().integer(),
     house_id: Joi.number().integer(),
+    user_id: Joi.number().integer().required(),
   }).required(),
   patch: Joi.object({
     lastname: Joi.string().required(),
@@ -14,6 +15,7 @@ const schemas = {
     class_name: Joi.string(),
     score: Joi.number().integer(),
     house_id: Joi.number().integer(),
+    user_id: Joi.number().integer().required(),
   }).required(),
 };
 
