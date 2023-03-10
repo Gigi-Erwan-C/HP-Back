@@ -14,11 +14,9 @@ const schemas = {
     firstname: Joi.string().required(),
     email: Joi.string().pattern(/^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/).required(),
     role_id: Joi.number().integer().required(),
-    user_id: Joi.number().integer().required(),
   }).required(),
   patchPasswordAdmin: Joi.object({
     password: Joi.string().required(),
-    user_id: Joi.number().integer().required(),
   }).required(),
   patchPasswordUser: Joi.object({
     oldPassword: Joi.string().required(),
