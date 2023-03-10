@@ -5,7 +5,12 @@ const userController = require('../controllers/userController');
 const controllerHandler = require('../controllers/helpers/controllerHandler');
 const validate = require('../validations/validate');
 
-const { post: userPostSchema, patch: userPatchSchema, patchPasswordAdmin: userPatchPasswordAdmin, patchPasswordUser: userPatchPasswordUser } = require('../validations/schemas/user.schema')
+const {
+  post: userPostSchema,
+  patch: userPatchSchema,
+  patchPasswordAdmin: userPatchPasswordAdmin,
+  patchPasswordUser: userPatchPasswordUser,
+} = require('../validations/schemas/user.schema');
 
 const isAdmin = require('../middlewares/isAdmin');
 const isLogged = require('../middlewares/isLogged');

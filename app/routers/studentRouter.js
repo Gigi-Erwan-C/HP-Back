@@ -5,7 +5,7 @@ const studentController = require('../controllers/studentController');
 const controllerHandler = require('../controllers/helpers/controllerHandler');
 const validate = require('../validations/validate');
 
-const { post: studentPostSchema, patch: studentPatchSchema } = require('../validations/schemas/student.schema')
+const { post: studentPostSchema, patch: studentPatchSchema } = require('../validations/schemas/student.schema');
 
 const isAdmin = require('../middlewares/isAdmin');
 const isLogged = require('../middlewares/isLogged');
