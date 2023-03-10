@@ -60,6 +60,11 @@ const pointController = {
     await pointDataMapper.deleteOnePoint(id);
     res.send('Your point(s) have been deleted');
   },
+
+  async getAllLogs(_, res) {
+    const result = await pointDataMapper.getAllLogsPoints();
+    res.json(result);
+  },
 };
 
 module.exports = pointController;

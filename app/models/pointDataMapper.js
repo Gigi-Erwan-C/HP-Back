@@ -96,6 +96,27 @@ const pointDataMapper = {
     return (result.rowCount === 1);
   },
 
+  async getAllLogsPoints() {
+    const preparedQuery = `
+    SELECT 
+    "value",
+    "content",
+    "point"."created_at",
+    COALESCE ("student_with_house_name"."house_name", "house"."name") AS "house_name",
+    "student_with_house_name"."firstname" AS "student_firstname",
+    "student_with_house_name"."lastname" AS "student_lastname",
+    "user"."firstname" AS "user_firstname",
+    "user"."lastname" AS "user_lastname"
+  FROM "point"
+  LEFT OUTER JOIN "house" ON "point"."house_id" = "house"."id"
+  JOIN "user" ON "user"."id" = "user_id"
+  LEFT OUTER JOIN "student_with_house_name" ON "student_with_house_name"."id" = "student_id"
+  ORDER BY "created_at" DESC LIMIT 100
+  ;`;
+    const result = await client.query(preparedQuery);
+    return result.rows;
+  },
+
 };
 
 module.exports = pointDataMapper;
