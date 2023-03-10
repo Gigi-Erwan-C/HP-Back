@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --verbose --forceExit",
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "resetdb": "sqitch revert -y && sqitch deploy && node data/resetdb.js"
   },
   "repository": {
     "type": "git",
